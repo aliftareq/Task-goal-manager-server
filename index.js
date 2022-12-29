@@ -32,7 +32,7 @@ run().catch(err => console.log(err.message.red.bold))
 
 //collections
 const usersCollection = client.db('TaskGoal').collection('users')
-const TasksCollection = client.db('TaskGoal').collection('Task')
+const TasksCollection = client.db('TaskGoal').collection('Tasks')
 
 //api's / endspoints
 
@@ -43,11 +43,12 @@ app.get('/', (req, res) => {
 
 
 
-//api for adding products
-app.post('/addproduct', async (req, res) => {
+//api for adding Task
+app.post('/addTask', async (req, res) => {
     try {
-        const product = req.body
-        const result = await ProductsCollection.insertOne(product)
+        const task = req.body
+        console.log(task);
+        const result = await TasksCollection.insertOne(task)
         res.send(result)
     }
     catch (error) {
@@ -55,12 +56,12 @@ app.post('/addproduct', async (req, res) => {
     }
 })
 
-//api for deleting products
-app.delete('/deleteproduct/:id', async (req, res) => {
+//api for deleting task
+app.delete('/deleteTask/:id', async (req, res) => {
     try {
         const id = req.params.id
         const query = { _id: ObjectId(id) }
-        const result = await ProductsCollection.deleteOne(query)
+        const result = await TasksCollection.deleteOne(query)
         res.send(result)
     }
     catch (error) {
